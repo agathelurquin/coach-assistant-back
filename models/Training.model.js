@@ -10,13 +10,10 @@ const trainingSchema = new Schema(
       type: String,
       required: [true, "Description of the training is required"],
     },
-    time: {
-      type: String,
-      required: [true, "Time of the training session required"],
-    },
-    day: {
+    trainingTime: {
+      // new Date --> date.setHours(Number)
       type: Date,
-      required: [true, "Date is required"],
+      required: [true, "Time of the training session required"],
     },
     location: {
       type: String,
@@ -42,9 +39,7 @@ const trainingSchema = new Schema(
       type: Number,
       required: [true, "Number of spots available for this training required"],
     },
-    paticipants: {
-      type: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    },
+    participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamp: true,
