@@ -4,30 +4,45 @@ const { Schema, model } = require("mongoose");
 const bookingSchema = new Schema(
   {
     training: {
-      type: Schema.types.ObjectId,
+      // The class booked
+      type: Schema.Types.ObjectId,
       ref: "Training",
     },
-    initiator: {
+    creator: {
+      // The user who created the booking (can be the client but also the coach)
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    toNotify: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-    coach: {
+    // Actually no need for this, we can get the coach info by populating training
+    // coach: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Coach",
+    // },
+    client: {
       type: Schema.Types.ObjectId,
-      ref: "Coach",
+      ref: "User",
     },
-    hasBeenSeen: {
-      type: Boolean,
-      default: false,
-    },
+
+    // toNotify: [
+    //   {
+    //     If the Coach created the booking for the client, the client gets notified
+    //     If a client created the booking, the coach gets the notification
+    //     type: Schema.Types.ObjectId,
+    //     ref: "User",
+    //   },
+    // ],
+
+    // hasBeenSeen: {
+    //   // need to figure this one out since their might be more than one person to see the notification
+    //   type: Boolean,
+    //   default: false,
+    // },
+
     status: {
+      // Manages the status if the class is in the future, has happened or has been cancelled
       type: String,
       enum: ["active", "archived", "cancelled"],
+      default: "active",
     },
   },
   {
