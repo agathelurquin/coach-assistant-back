@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // Require the User model in order to interact with the database
-const { User } = require("../models/User.model");
+const { User, Coach } = require("../models/User.model");
 
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
@@ -18,10 +18,10 @@ const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
-  const { email, password, name } = req.body;
+  const { email, password, name, role, description, activity } = req.body;
 
   // Check if email or password or name are provided as empty strings
-  if (email === "" || password === "" || name === "") {
+  if (email === "" || password === "" || name === "" || role === "") {
     res.status(400).json({ message: "Provide email, password and name" });
     return;
   }
@@ -58,7 +58,18 @@ router.post("/signup", (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, name });
+      if (role === "student") {
+        return User.create({ email, password: hashedPassword, name, role });
+      } else {
+        return Coach.create({
+          name,
+          email,
+          password: hashedPassword,
+          description,
+          activity,
+          role,
+        });
+      }
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
