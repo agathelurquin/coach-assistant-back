@@ -8,16 +8,7 @@ const bookingSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Training",
     },
-    creator: {
-      // The user who created the booking (can be the client but also the coach)
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-    // Actually no need for this, we can get the coach info by populating training
-    // coach: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "Coach",
-    // },
+
     client: {
       type: Schema.Types.ObjectId,
       ref: "User",

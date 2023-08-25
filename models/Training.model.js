@@ -15,31 +15,41 @@ const trainingSchema = new Schema(
       type: Date,
       // required: [true, "Time of the training session required"],
     },
-    location: {
-      type: String,
-      // required: [true, "Location is required"],
-    },
     duration: {
       type: String,
       // required: [true, "Duration is required"],
     },
+    location: {
+      type: String,
+      // required: [true, "Location is required"],
+    },
     price: {
       type: Number,
-      // // required: [true, "price is required"],
+      // required: [true, "price is required"],
     },
     activityType: {
       type: String,
-      // // required: [true, "type of activity is required"],
+      // required: [true, "type of activity is required"],
     },
     coach: {
       type: Schema.Types.ObjectId,
       ref: "Coach",
     },
+    type: {
+      type: String,
+      enum: ["private", "group", "pro"],
+      default: "private",
+    },
     availableSpots: {
       type: Number,
-      // // required: [true, "Number of spots available for this training required"],
+      default: 1,
+      // required: [true, "Number of spots available for this training required"],
     },
     participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    booked: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamp: true,

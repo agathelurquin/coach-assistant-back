@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 const { User, Coach } = require("../models/User.model");
 
 // Get All :
@@ -17,8 +18,8 @@ router.get("/:userId", (req, res, next) => {
 });
 
 // Update One:
-router.patch("/:userId", (req, res, next) => {
-  const userId = req.params.userId;
+router.patch("/", (req, res, next) => {
+  const userId = req.payload._id;
 
   User.findByIdAndUpdate(userId, req.body, { new: true })
     .then((updatedUser) => res.response(200).json(updatedUser))
@@ -26,8 +27,8 @@ router.patch("/:userId", (req, res, next) => {
 });
 
 // Delete One:
-router.delete("/:userId", (req, res, next) => {
-  const userId = req.params.userId;
+router.delete("/", (req, res, next) => {
+  const userId = req.payload._id;
 
   User.findByIdAndDelete(userId)
     .then(() => res.status(200).json({ message: "user successfully deleted" }))

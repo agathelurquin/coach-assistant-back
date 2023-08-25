@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { isAuthenticated, isCoach } = require("../middleware/jwt.middleware");
 const Training = require("../models/Training.model");
 
 router.post("/", (req, res, next) => {
@@ -20,16 +21,31 @@ router.get("/:trainingId", (req, res, next) => {
     .catch((e) => next(e));
 });
 
-router.patch("/:trainingId", (req, res, next) => {
+// Get classes by coach
+router.get("/coach", isCoach, async (req, res, next) => {
+  try {
+    const coachId = req.payload._id;
+    const coachTrainings = await Training.find({ coach: coachId });
+    res.json(coachTrainings);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.patch("/:trainingId", isCoach, (req, res, next) => {
   const trainingId = req.params.trainingId;
-  Training.findByIdAndUpdate(trainingId, req.body, { new: true })
+  Training.findOneAndUpdate(
+    { _id: trainingId, coach: req.payload._id },
+    req.body,
+    { new: true }
+  )
     .then((updatedTraining) => res.status(200).json(updatedTraining))
     .catch((e) => next(e));
 });
 
-router.delete("/:trainingId", (req, res, next) => {
+router.delete("/:trainingId", isCoach, (req, res, next) => {
   const trainingId = req.params.trainingId;
-  Training.findByIdAndDelete(trainingId)
+  Training.findOneAndDelete({ _id: trainingId, coach: req.payload._id })
     .then(() =>
       res.status(200).json({ message: "training successfully deleted" })
     )

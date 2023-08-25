@@ -13,6 +13,15 @@ router.get("/", (req, res, next) => {
     .catch((e) => next(e));
 });
 
+router.get("/client", async (req, res, next) => {
+  try {
+    const clientBookings = await Booking.find({ client: req.payload._id });
+    res.json(clientBookings);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:bookingId", (req, res, next) => {
   const bookingId = req.params.bookingId;
   Booking.findById(bookingId)
