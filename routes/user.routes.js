@@ -18,7 +18,7 @@ router.get("/:userId", (req, res, next) => {
 });
 
 // Update One:
-router.patch("/", (req, res, next) => {
+router.patch("/:userId", (req, res, next) => {
   const userId = req.payload._id;
 
   User.findByIdAndUpdate(userId, req.body, { new: true })

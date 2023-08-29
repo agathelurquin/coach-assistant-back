@@ -17,6 +17,7 @@ function getTokenFromHeaders(req) {
   ) {
     // Get the encoded token string and return it
     const token = req.headers.authorization.split(" ")[1];
+    console.log("helloooo", req.headers);
     return token;
   }
 
@@ -35,8 +36,6 @@ async function isCoach(req, res, next) {
     next(error);
   }
 }
-// isAdmin
-// isClient
 
 // Export the middleware so that we can use it to create protected routes
 module.exports = {

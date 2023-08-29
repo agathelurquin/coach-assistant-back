@@ -12,6 +12,11 @@ const trainingSchema = new Schema(
     },
     trainingTime: {
       // new Date --> date.setHours(Number)
+      type: String,
+      // required: [true, "Time of the training session required"],
+    },
+    trainingDate: {
+      // new Date --> date.setHours(Number)
       type: Date,
       // required: [true, "Time of the training session required"],
     },
@@ -37,7 +42,7 @@ const trainingSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ["private", "group", "pro"],
+      // enum: ["private", "group", "pro"],
       default: "private",
     },
     availableSpots: {
