@@ -22,9 +22,10 @@ router.get("/:trainingId", (req, res, next) => {
 });
 
 // Get classes by coach
-router.get("/coach", isCoach, async (req, res, next) => {
+router.get("/coach/:coachId", isCoach, async (req, res, next) => {
+  console.log("the coach id", req.payload._id, "params", req.params);
   try {
-    const coachId = req.payload._id;
+    const coachId = req.params.coachId;
     const coachTrainings = await Training.find({ coach: coachId });
     res.json(coachTrainings);
   } catch (e) {

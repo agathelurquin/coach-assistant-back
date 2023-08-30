@@ -14,6 +14,11 @@ const bookingSchema = new Schema(
       ref: "User",
     },
 
+    coach: {
+      type: Schema.Types.ObjectId,
+      ref: "Coach",
+    },
+
     // toNotify: [
     //   {
     //     If the Coach created the booking for the client, the client gets notified

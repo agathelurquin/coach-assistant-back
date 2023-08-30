@@ -13,9 +13,38 @@ router.get("/", (req, res, next) => {
     .catch((e) => next(e));
 });
 
+// Get active bookings of a client
 router.get("/client", async (req, res, next) => {
   try {
-    const clientBookings = await Booking.find({ client: req.payload._id });
+    const clientBookings = await Booking.find({
+      client: req.payload._id,
+      status: "active",
+    }).populate("training");
+    res.json(clientBookings);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get active bookings of a coach
+router.get("/coach", async (req, res, next) => {
+  try {
+    const coachBookings = await Booking.find({
+      coach: req.payload._id,
+      status: "active",
+    }).populate("training");
+    res.json(coachBookings);
+  } catch (error) {
+    next(error);
+  }
+});
+// Get all bookings of a client
+router.get("/client", async (req, res, next) => {
+  try {
+    const clientBookings = await Booking.find({
+      client: req.payload._id,
+      status: "active",
+    }).populate("training");
     res.json(clientBookings);
   } catch (error) {
     next(error);

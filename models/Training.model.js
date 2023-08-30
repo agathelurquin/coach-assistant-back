@@ -50,7 +50,10 @@ const trainingSchema = new Schema(
       default: 1,
       // required: [true, "Number of spots available for this training required"],
     },
-    participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    participants: {
+      type: [{ type: Schema.Types.ObjectId, ref: "User" }],
+      validation: [arrayLimit, `This training is full`],
+    },
     booked: {
       type: Boolean,
       default: false,
@@ -60,6 +63,10 @@ const trainingSchema = new Schema(
     timestamp: true,
   }
 );
+
+function arrayLimit(availableSpots) {
+  return participants.length <= availableSpots;
+}
 
 const Training = model("Training", trainingSchema);
 module.exports = Training;
