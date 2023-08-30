@@ -38,14 +38,16 @@ router.get("/coach", async (req, res, next) => {
     next(error);
   }
 });
-// Get all bookings of a client
-router.get("/client", async (req, res, next) => {
+// Get the booking of a client for one specific class
+router.get("/client/:trainingId", async (req, res, next) => {
   try {
-    const clientBookings = await Booking.find({
+    const clientTrainingBooking = await Booking.find({
       client: req.payload._id,
+      training: req.params.trainingId,
       status: "active",
     }).populate("training");
-    res.json(clientBookings);
+    console.log("response from the server:", clientTrainingBooking);
+    res.json(clientTrainingBooking);
   } catch (error) {
     next(error);
   }
