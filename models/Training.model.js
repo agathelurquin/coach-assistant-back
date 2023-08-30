@@ -52,7 +52,7 @@ const trainingSchema = new Schema(
     },
     participants: {
       type: [{ type: Schema.Types.ObjectId, ref: "User" }],
-      validation: [arrayLimit, `This training is full`],
+      // validate: [arrayLimit(availableSpots), `This training is full`],
     },
     booked: {
       type: Boolean,
@@ -64,9 +64,9 @@ const trainingSchema = new Schema(
   }
 );
 
-function arrayLimit(availableSpots) {
-  return participants.length <= availableSpots;
-}
+// function arrayLimit(availableSpots) {
+//   return participants.length <= availableSpots;
+// }
 
 const Training = model("Training", trainingSchema);
 module.exports = Training;

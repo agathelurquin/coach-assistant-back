@@ -33,15 +33,42 @@ router.get("/coach/:coachId", isCoach, async (req, res, next) => {
   }
 });
 
-router.patch("/:trainingId", isCoach, (req, res, next) => {
+router.patch("/:trainingId", isCoach, async (req, res, next) => {
   const trainingId = req.params.trainingId;
-  Training.findOneAndUpdate(
-    { _id: trainingId, coach: req.payload._id },
-    req.body,
-    { new: true }
-  )
-    .then((updatedTraining) => res.status(200).json(updatedTraining))
-    .catch((e) => next(e));
+  try {
+    const training = await Training.findOne({
+      _id: trainingId,
+      coach: req.payload._id,
+    });
+    if (training.participants.length >= training.availableSpots) {
+      return res.json({ message: "No available spots" });
+    }
+    training.participants = req.body.participants;
+    if (training.participants.length === training.availableSpots) {
+      training.booked = true;
+    }
+
+    const updatedTraining = await training.save();
+    return res.json(updatedTraining);
+  } catch (error) {
+    next(error);
+  }
+
+  // Training.findOne({ _id: trainingId, coach: req.payload._id })
+  //   .then((training) => {
+  //     if (training.participants.length >= training.availableSpots) {
+  //       training.booked = true;
+  //       training.save().then((_) => {
+  //         res.json({ message: "No available spots" });
+  //       });
+  //     }
+  //     training.participants = req.body.participants;
+  //     return training.save();
+  //   })
+  //   .then((updatedDocument) => {
+  //     res.json(updatedDocument);
+  //   })
+  //   .catch((e) => next(e));
 });
 
 router.delete("/:trainingId", isCoach, (req, res, next) => {
