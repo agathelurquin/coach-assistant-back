@@ -48,6 +48,7 @@ const trainingSchema = new Schema(
     availableSpots: {
       type: Number,
       default: 1,
+      min: [0, "Class is full"],
       // required: [true, "Number of spots available for this training required"],
     },
     participants: {
@@ -57,6 +58,7 @@ const trainingSchema = new Schema(
     booked: {
       type: Boolean,
       default: false,
+      // max: [availableSpots, "class is full"],
     },
   },
   {

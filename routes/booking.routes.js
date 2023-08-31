@@ -17,8 +17,10 @@ router.get("/", (req, res, next) => {
 router.get("/client", async (req, res, next) => {
   try {
     const clientBookings = await Booking.find({
-      client: req.payload._id,
-      status: "active",
+      $and: [
+        { client: req.payload._id },
+        { status: { $in: ["pending", "active"] } },
+      ],
     }).populate("training");
     res.json(clientBookings);
   } catch (error) {
@@ -31,8 +33,8 @@ router.get("/coach", async (req, res, next) => {
   try {
     const coachBookings = await Booking.find({
       $and: [
-        { coach: { $eq: req.payload._id } },
-        { status: { $in: ["pending", "active"] } },
+        { coach: req.payload._id },
+        { status: { $in: ["pending", "active", "cancelled"] } },
       ],
     }).populate("training");
     res.json(coachBookings);
