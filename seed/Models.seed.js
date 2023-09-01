@@ -21,14 +21,6 @@ const possibleSports = [
   "yoga",
 ];
 
-const possibleStatus = [
-  "pending",
-  "active",
-  "archived",
-  "cancelRequested",
-  "cancelledConfirmed",
-];
-
 const possibleDurations = ["30m", "1h", " 1h15", "1h30", "2h", "3h"];
 const possibleTrainingGroup = ["private", "group", "pro"];
 
@@ -79,7 +71,7 @@ function generateClients() {
 
 // Create trainings:
 function generateTrainings() {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 150; i++) {
     const oneCoach = getRandom(coaches);
     let training = {
       _id: faker.database.mongodbObjectId(),
@@ -104,12 +96,27 @@ function generateTrainings() {
   return trainings;
 }
 
+function checkBooking(foundTraining) {
+  if (foundTraining.trainingDate <= new Date()) {
+    possibleStatus = ["archived", "cancelledConfirmed"];
+  } else {
+    possibleStatus = [
+      "pending",
+      "active",
+      "archived",
+      "cancelRequested",
+      "cancelledConfirmed",
+    ];
+  }
+}
+
 // Create bookings:
 function generateBookings() {
   console.log("starting to generate bookings");
 
   for (let i = 0; i < 50; i++) {
     let foundTraining = getRandom(trainings);
+    checkBooking(foundTraining);
     let booking = {
       _id: faker.database.mongodbObjectId(),
 
@@ -119,8 +126,12 @@ function generateBookings() {
       status: getRandom(possibleStatus),
     };
     bookings.push(booking);
+    console.log(
+      "bookings created, booking example: ",
+      booking.status,
+      foundTraining.trainingDate
+    );
   }
-  console.log("bookings created, booking example: ", bookings[0]);
 
   return bookings;
 }
@@ -149,24 +160,26 @@ async function seed() {
 
       allTrainings.forEach((training) => {
         allBookings.forEach((booking) => {
-          console.log(
-            "on essaye de populer ",
-            training,
-            "with the booking ",
-            booking
-          );
+          // console.log(
+          //   "on essaye de populer ",
+          //   training,
+          //   "with the booking ",
+          //   booking
+          // );
+          // console.log(
+          //   "MATCHING, SO PUSHING TO ",
+          //   "training",
+          //   training,
+          //   "training participants",
+          //   training.participants,
+          //   "from booking: ",
+          //   booking
           if (
             booking.training === training._id &&
             training.participants.length < training.availableSpots
           ) {
             console.log(
-              "MATCHING, SO PUSHING TO ",
-              "training",
-              training,
-              "training participants",
-              training.participants,
-              "from booking: ",
-              booking
+              "Aleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
             );
             training.participants.push(booking.client);
           }
@@ -175,17 +188,20 @@ async function seed() {
     }
 
     await populateTrainings();
-    console.log(
-      "=============     SEEDING DONE ==============",
-      "first User",
-      allUsers[0],
-      "first Coach",
-      allCoaches[0],
-      "first Training",
-      allTrainings[0],
-      "first Booking",
-      allBookings[0]
-    );
+    async function log() {
+      console.log(
+        "=============     SEEDING DONE =============="
+        // "first User",
+        // allUsers,
+        // "first Coach",
+        // allCoaches,
+        // "first Training",
+        // allTrainings,
+        // "first Booking",
+        // allBookings
+      );
+    }
+    // await log();
   } catch (error) {
     console.log(error);
   } finally {
