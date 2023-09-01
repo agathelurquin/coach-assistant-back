@@ -85,7 +85,7 @@ function generateTrainings() {
       activityType: getRandom(possibleSports),
       coach: oneCoach._id,
       type: getRandom(possibleTrainingGroup),
-      image: faker.image.urlLoremFlickr({ category: "sports" }),
+      image: faker.image.urlPicsumPhotos(),
       availableSpots: faker.number.int({ max: 20 }),
       participants: [], // POPULATE THIS,
     };
