@@ -45,6 +45,9 @@ const trainingSchema = new Schema(
       // enum: ["private", "group", "pro"],
       default: "private",
     },
+    image: {
+      type: String,
+    },
     availableSpots: {
       type: Number,
       default: 1,
