@@ -1,4 +1,5 @@
 const { faker } = require("@faker-js/faker");
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 require("../db/index");
 
@@ -43,7 +44,7 @@ function generateCoaches() {
       _id: faker.database.mongodbObjectId(),
 
       email: faker.internet.email(),
-      password: "Student1!",
+      password: bcrypt.hashSync("Student1!", 10),
       name: faker.internet.userName(),
       avatar: faker.image.avatar(),
       role: "coach",
@@ -64,7 +65,7 @@ function generateClients() {
     let user = {
       _id: faker.database.mongodbObjectId(),
       email: faker.internet.email(),
-      password: "Student1!",
+      password: bcrypt.hashSync("Student1!", 10),
       name: faker.internet.userName(),
       avatar: faker.image.avatar(),
       role: "student",
@@ -78,8 +79,8 @@ function generateClients() {
 
 // Create trainings:
 function generateTrainings() {
-  const oneCoach = getRandom(coaches);
   for (let i = 0; i < 50; i++) {
+    const oneCoach = getRandom(coaches);
     let training = {
       _id: faker.database.mongodbObjectId(),
 
@@ -158,6 +159,15 @@ async function seed() {
             booking.training === training._id &&
             training.participants.length < training.availableSpots
           ) {
+            console.log(
+              "MATCHING, SO PUSHING TO ",
+              "training",
+              training,
+              "training participants",
+              training.participants,
+              "from booking: ",
+              booking
+            );
             training.participants.push(booking.client);
           }
         });
