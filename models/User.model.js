@@ -27,7 +27,7 @@ const userSchema = new Schema(
       enum: ["coach", "student"],
     },
     myClasses: {
-      type: Array,
+      type: [String],
     },
   },
   {

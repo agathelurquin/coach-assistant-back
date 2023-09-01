@@ -37,7 +37,13 @@ const bookingSchema = new Schema(
     status: {
       // Manages the status if the class is in the future, has happened or has been cancelled
       type: String,
-      enum: ["pending", "active", "archived", "cancelled", "deleted"],
+      enum: [
+        "pending",
+        "active",
+        "archived",
+        "cancelRequested",
+        "cancelledConfirmed",
+      ],
       default: "active",
     },
   },
