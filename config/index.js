@@ -23,13 +23,14 @@ module.exports = (app) => {
 
   // controls a very specific header to pass headers from the frontend
   app.use(
-    cors({
-      origin: [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        process.env.ORIGIN,
-      ],
-    })
+    cors()
+    //   {
+    //   origin: [
+    //     "http://localhost:5173",
+    //     "http://127.0.0.1:5173",
+    //     process.env.ORIGIN,
+    //   ],
+    // }
   );
 
   // In development environment the app logs
