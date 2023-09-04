@@ -37,7 +37,7 @@ function generateCoaches() {
 
       email: faker.internet.email(),
       password: bcrypt.hashSync("Student1!", 10),
-      name: faker.internet.userName(),
+      name: faker.person.fullName(),
       avatar: faker.image.avatar(),
       role: "coach",
       description: faker.person.bio(),
@@ -58,7 +58,7 @@ function generateClients() {
       _id: faker.database.mongodbObjectId(),
       email: faker.internet.email(),
       password: bcrypt.hashSync("Student1!", 10),
-      name: faker.internet.userName(),
+      name: faker.person.fullName(),
       avatar: faker.image.avatar(),
       role: "student",
     };
@@ -78,7 +78,10 @@ function generateTrainings() {
 
       name: `${getRandom(possibleSports)} with ${oneCoach.name}`,
       description: faker.company.catchPhrase(),
-      trainingDate: faker.date.anytime(),
+      trainingDate: faker.date.between({
+        from: "2023-01-01T00:00:00.000Z",
+        to: "2023-09-08T00:00:00.000Z",
+      }),
       duration: getRandom(possibleDurations),
       location: faker.location.city(),
       price: faker.commerce.price({ min: 50, max: 700, dec: 0 }),
@@ -178,9 +181,6 @@ async function seed() {
             booking.training === training._id &&
             training.participants.length < training.availableSpots
           ) {
-            console.log(
-              "Aleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-            );
             training.participants.push(booking.client);
           }
         });
