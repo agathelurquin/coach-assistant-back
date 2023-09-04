@@ -13,6 +13,21 @@ router.get("/", (req, res, next) => {
     .then((allTrainings) => res.status(200).json(allTrainings))
     .catch((e) => next(e));
 });
+router.get("/past", (req, res, next) => {
+  Training.find()
+    .then((allTrainings) => {
+      let previousTrainings = [];
+      for (let training of allTrainings) {
+        if (new Date(training.trainingDate) <= new Date()) {
+          console.log("before");
+          previousTrainings.push(training);
+        }
+
+        res.status(200).json(previousTrainings);
+      }
+    })
+    .catch((e) => next(e));
+});
 
 router.get("/:trainingId", (req, res, next) => {
   const trainingId = req.params.trainingId;

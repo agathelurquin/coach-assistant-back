@@ -71,7 +71,7 @@ function generateClients() {
 
 // Create trainings:
 function generateTrainings() {
-  for (let i = 0; i < 150; i++) {
+  for (let i = 0; i < 50; i++) {
     const oneCoach = getRandom(coaches);
     let training = {
       _id: faker.database.mongodbObjectId(),
@@ -79,8 +79,8 @@ function generateTrainings() {
       name: `${getRandom(possibleSports)} with ${oneCoach.name}`,
       description: faker.company.catchPhrase(),
       trainingDate: faker.date.between({
-        from: "2023-01-01T00:00:00.000Z",
-        to: "2023-09-08T00:00:00.000Z",
+        from: "2023-06-01T00:00:00.000Z",
+        to: "2023-09-15T00:00:00.000Z",
       }),
       duration: getRandom(possibleDurations),
       location: faker.location.city(),
