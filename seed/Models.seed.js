@@ -117,7 +117,7 @@ function checkBooking(foundTraining) {
 function generateBookings() {
   console.log("starting to generate bookings");
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 150; i++) {
     let foundTraining = getRandom(trainings);
     checkBooking(foundTraining);
     let booking = {
