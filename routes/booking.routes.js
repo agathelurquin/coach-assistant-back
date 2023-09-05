@@ -34,7 +34,17 @@ router.get("/coach", async (req, res, next) => {
     const coachBookings = await Booking.find({
       $and: [
         { coach: req.payload._id },
-        { status: { $in: ["pending", "active", "cancelled"] } },
+        {
+          status: {
+            $in: [
+              "pending",
+              "active",
+              "archived",
+              "cancelRequested",
+              "cancelledConfirmed",
+            ],
+          },
+        },
       ],
     }).populate("training");
     res.json(coachBookings);
