@@ -24,6 +24,18 @@ const possibleSports = [
 const possibleDurations = ["30m", "1h", " 1h15", "1h30", "2h", "3h"];
 const possibleTrainingGroup = ["private", "group", "pro"];
 
+let maiwenn;
+let aurelien;
+let omar;
+let laurena;
+let olivia;
+let aurelie;
+let tiffany;
+let training1;
+let training2;
+let training3;
+let training4;
+
 function getRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
@@ -31,6 +43,55 @@ function getRandom(array) {
 // Create Coaches
 function generateCoaches() {
   console.log("starting to generate coaches");
+  maiwenn = {
+    _id: faker.database.mongodbObjectId(),
+
+    email: "maiwenn@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Maïwenn",
+    avatar: "../assets/coach-maïwenn-avatar.jpg",
+    role: "coach",
+    description: faker.person.bio(),
+    activities: getRandom(possibleSports),
+  };
+  coaches.push(maiwenn);
+  aurelien = {
+    _id: faker.database.mongodbObjectId(),
+
+    email: "aurelien@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Aurelien",
+    avatar: "../assets/coach-aurelien-avatar.jpg",
+    role: "coach",
+    description: faker.person.bio(),
+    activities: getRandom(possibleSports),
+  };
+  coaches.push(aurelien);
+  omar = {
+    _id: faker.database.mongodbObjectId(),
+
+    email: "omar@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Omar",
+    avatar: "../assets/coach-omar-avatar.jpg",
+    role: "coach",
+    description: faker.person.bio(),
+    activities: "boxing",
+  };
+  coaches.push(omar);
+  laurena = {
+    _id: faker.database.mongodbObjectId(),
+
+    email: "laurena@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Laurena",
+    avatar: "../assets/coach-laurena-avatar.jpg",
+    role: "coach",
+    description: faker.person.bio(),
+    activities: "boxing",
+  };
+  coaches.push(laurena);
+
   for (let i = 0; i < 20; i++) {
     let coach = {
       _id: faker.database.mongodbObjectId(),
@@ -52,6 +113,42 @@ function generateCoaches() {
 // Create Students
 function generateClients() {
   console.log("starting to generate students");
+  olivia = {
+    _id: faker.database.mongodbObjectId(),
+    email: "olivia@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Olivia",
+    avatar: "../assets/olivia-avatar.jpg",
+    role: "student",
+  };
+  users.push(olivia);
+  aurelie = {
+    _id: faker.database.mongodbObjectId(),
+    email: "aurelie@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Aurelie",
+    avatar: "../assets/aurelie-avatar.jpg",
+    role: "student",
+  };
+  users.push(aurelie);
+  tiffany = {
+    _id: faker.database.mongodbObjectId(),
+    email: "tiffany@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Tiffany",
+    avatar: "../assets/tiffany-avatar.jpg",
+    role: "student",
+  };
+  users.push(tiffany);
+  diana = {
+    _id: faker.database.mongodbObjectId(),
+    email: "diana@gmail.com",
+    password: bcrypt.hashSync("Student1!", 10),
+    name: "Diana",
+    avatar: "../assets/diana-avatar.jpg",
+    role: "student",
+  };
+  users.push(diana);
 
   for (let i = 0; i < 20; i++) {
     let user = {
@@ -71,6 +168,90 @@ function generateClients() {
 
 // Create trainings:
 function generateTrainings() {
+  training1 = {
+    _id: faker.database.mongodbObjectId(),
+
+    name: ` Open Boxing Class on the Quai the Seine`,
+    description: faker.company.catchPhrase(),
+    trainingDate: faker.date.between({
+      from: "2023-09-09T00:00:00.000Z",
+      to: "2023-09-12T00:00:00.000Z",
+    }),
+    duration: getRandom(possibleDurations),
+    location: "Passerelle Léopold-Sédar-Senghor",
+    price: 15,
+    activityType: "boxing",
+    coach: maiwenn._id,
+    type: "group",
+    image: "../assets/training-boxing-0.jpg",
+    availableSpots: 15,
+    participants: [aurelie._id, diana._id, olivia._id], // POPULATE THIS,
+  };
+  trainings.push(training1);
+  training3 = {
+    _id: faker.database.mongodbObjectId(),
+
+    name: `Cardio Training
+    `,
+    description: faker.company.catchPhrase(),
+    trainingDate: faker.date.between({
+      from: "2023-09-09T00:00:00.000Z",
+      to: "2023-09-13T00:00:00.000Z",
+    }),
+    duration: getRandom(possibleDurations),
+    location: "Temple Noble Art",
+    price: 15,
+    activityType: "cardio",
+    coach: maiwenn._id,
+    type: "group",
+    image: "../assets/training-cardio-0.jpg",
+    availableSpots: 20,
+    participants: [diana._id], // POPULATE THIS,
+  };
+  trainings.push(training3);
+  training4 = {
+    _id: faker.database.mongodbObjectId(),
+
+    name: `Private Boxing Class
+    `,
+    description: faker.company.catchPhrase(),
+    trainingDate: faker.date.between({
+      from: "2023-09-09T00:00:00.000Z",
+      to: "2023-09-18T00:00:00.000Z",
+    }),
+    duration: getRandom(possibleDurations),
+    location: "Parc Monceau",
+    price: 1,
+    activityType: "cardio",
+    coach: maiwenn._id,
+    type: "group",
+    image: "../assets/training-boxe-1.jpg",
+    availableSpots: 1,
+    participants: [diana._id], // POPULATE THIS,
+  };
+  trainings.push(training4);
+
+  training2 = {
+    _id: faker.database.mongodbObjectId(),
+
+    name: `2h Tennis Private Class for 4 people`,
+    description: faker.company.catchPhrase(),
+    trainingDate: faker.date.between({
+      from: "2023-09-09T00:00:00.000Z",
+      to: "2023-09-12T00:00:00.000Z",
+    }),
+    duration: "2h",
+    location: "Clichy",
+    price: 4,
+    activityType: "tennis",
+    coach: omar._id,
+    type: "private",
+    image: "../assets/training-tennis-0.jpg",
+    availableSpots: 4,
+    participants: [aurelie._id, diana._id, olivia._id, tiffany._id], // POPULATE THIS,
+  };
+  trainings.push(training2);
+
   for (let i = 0; i < 50; i++) {
     const oneCoach = getRandom(coaches);
     let training = {
@@ -116,6 +297,90 @@ function checkBooking(foundTraining) {
 // Create bookings:
 function generateBookings() {
   console.log("starting to generate bookings");
+  let booking1 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training1._id,
+    client: aurelie._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking1);
+  let booking2 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training1._id,
+    client: diana._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking2);
+  let booking3 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training1._id,
+    client: olivia._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+
+  let booking6 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training2._id,
+    client: aurelie._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking6);
+  let booking7 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training2._id,
+    client: diana._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking7);
+  let booking8 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training2._id,
+    client: olivia._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking8);
+
+  let booking9 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training2._id,
+    client: tiffany._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking9);
+
+  bookings.push(booking3);
+  let booking4 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training3._id,
+    client: diana._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking4);
+  let booking5 = {
+    _id: faker.database.mongodbObjectId(),
+
+    training: training4._id,
+    client: diana._id,
+    coach: maiwenn._id,
+    status: "pending",
+  };
+  bookings.push(booking5);
 
   for (let i = 0; i < 150; i++) {
     let foundTraining = getRandom(trainings);
