@@ -35,6 +35,8 @@ let training1;
 let training2;
 let training3;
 let training4;
+let training5;
+let training6;
 
 function getRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -49,7 +51,7 @@ function generateCoaches() {
     email: "maiwenn@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Maïwenn",
-    avatar: "../assets/coach-maïwenn-avatar.jpg",
+    avatar: "https://i.ibb.co/7JjPmpk/coach-maiwenn-avatar.jpg",
     role: "coach",
     description: faker.person.bio(),
     activities: getRandom(possibleSports),
@@ -61,7 +63,7 @@ function generateCoaches() {
     email: "aurelien@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Aurelien",
-    avatar: "../assets/coach-aurelien-avatar.jpg",
+    avatar: "https://i.ibb.co/xm08kJX/coach-aurelien-avatar.jpg",
     role: "coach",
     description: faker.person.bio(),
     activities: getRandom(possibleSports),
@@ -73,7 +75,7 @@ function generateCoaches() {
     email: "omar@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Omar",
-    avatar: "../assets/coach-omar-avatar.jpg",
+    avatar: "https://i.ibb.co/rZddjvM/coach-omar-avatar.jpg",
     role: "coach",
     description: faker.person.bio(),
     activities: "boxing",
@@ -85,7 +87,7 @@ function generateCoaches() {
     email: "laurena@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Laurena",
-    avatar: "../assets/coach-laurena-avatar.jpg",
+    avatar: "https://i.ibb.co/hgPwWbk/coach-laurena-avatar.jpg",
     role: "coach",
     description: faker.person.bio(),
     activities: "boxing",
@@ -118,7 +120,7 @@ function generateClients() {
     email: "olivia@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Olivia",
-    avatar: "../assets/olivia-avatar.jpg",
+    avatar: "https://i.ibb.co/2YBMRDQ/olivia-avatar.jpg",
     role: "student",
   };
   users.push(olivia);
@@ -127,7 +129,7 @@ function generateClients() {
     email: "aurelie@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Aurelie",
-    avatar: "../assets/aurelie-avatar.jpg",
+    avatar: "https://i.ibb.co/KxPBJgz/aurelie-avatar.jpg",
     role: "student",
   };
   users.push(aurelie);
@@ -136,7 +138,7 @@ function generateClients() {
     email: "tiffany@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Tiffany",
-    avatar: "../assets/tiffany-avatar.jpg",
+    avatar: "https://i.ibb.co/Xb0GyVt/tiffany-avatar.jpg",
     role: "student",
   };
   users.push(tiffany);
@@ -145,7 +147,7 @@ function generateClients() {
     email: "diana@gmail.com",
     password: bcrypt.hashSync("Student1!", 10),
     name: "Diana",
-    avatar: "../assets/diana-avatar.jpg",
+    avatar: "https://i.ibb.co/zfWkX3M/diana-avatar-copy.jpg",
     role: "student",
   };
   users.push(diana);
@@ -183,11 +185,31 @@ function generateTrainings() {
     activityType: "boxing",
     coach: maiwenn._id,
     type: "group",
-    image: "../assets/training-boxing-0.jpg",
+    image: "https://i.ibb.co/tPkc5sw/training-boxing-0.jpg.jpg",
     availableSpots: 15,
     participants: [aurelie._id, diana._id, olivia._id], // POPULATE THIS,
   };
   trainings.push(training1);
+  training6 = {
+    _id: faker.database.mongodbObjectId(),
+
+    name: `Cardio / Boxing`,
+    description: faker.company.catchPhrase(),
+    trainingDate: faker.date.between({
+      from: "2023-09-09T00:00:00.000Z",
+      to: "2023-09-12T00:00:00.000Z",
+    }),
+    duration: getRandom(possibleDurations),
+    location: "Paris",
+    price: 15,
+    activityType: "boxing",
+    coach: maiwenn._id,
+    type: "group",
+    image: "https://i.ibb.co/PG5N4ns/training-boxing-2.jpg",
+    availableSpots: 20,
+    participants: [aurelie._id], // POPULATE THIS,
+  };
+  trainings.push(training6);
   training3 = {
     _id: faker.database.mongodbObjectId(),
 
@@ -204,7 +226,7 @@ function generateTrainings() {
     activityType: "cardio",
     coach: maiwenn._id,
     type: "group",
-    image: "../assets/training-cardio-0.jpg",
+    image: "https://i.ibb.co/tpZZMRw/training-cardio-1.jpg",
     availableSpots: 20,
     participants: [diana._id], // POPULATE THIS,
   };
@@ -225,7 +247,7 @@ function generateTrainings() {
     activityType: "cardio",
     coach: maiwenn._id,
     type: "group",
-    image: "../assets/training-boxe-1.jpg",
+    image: "https://i.ibb.co/kSkWXnW/training-boxe-1.jpg",
     availableSpots: 1,
     participants: [diana._id], // POPULATE THIS,
   };
@@ -234,7 +256,7 @@ function generateTrainings() {
   training2 = {
     _id: faker.database.mongodbObjectId(),
 
-    name: `2h Tennis Private Class for 4 people`,
+    name: `2h Tennis Private Class`,
     description: faker.company.catchPhrase(),
     trainingDate: faker.date.between({
       from: "2023-09-09T00:00:00.000Z",
@@ -246,11 +268,31 @@ function generateTrainings() {
     activityType: "tennis",
     coach: omar._id,
     type: "private",
-    image: "../assets/training-tennis-0.jpg",
+    image: "https://i.ibb.co/0nBjhy3/taining-tennis-0-jpg.jpg",
     availableSpots: 4,
     participants: [aurelie._id, diana._id, olivia._id, tiffany._id], // POPULATE THIS,
   };
   trainings.push(training2);
+  training5 = {
+    _id: faker.database.mongodbObjectId(),
+
+    name: `High Intensity Interval Training`,
+    description: faker.company.catchPhrase(),
+    trainingDate: faker.date.between({
+      from: "2023-09-09T00:00:00.000Z",
+      to: "2023-09-12T00:00:00.000Z",
+    }),
+    duration: "45h",
+    location: "Paris",
+    price: 30,
+    activityType: "HIIT",
+    coach: omar._id,
+    type: "group",
+    image: "https://i.ibb.co/y6JrWjv/training-hiit-0.jpg",
+    availableSpots: 10,
+    participants: [aurelie._id, diana._id, olivia._id, tiffany._id], // POPULATE THIS,
+  };
+  trainings.push(training5);
 
   for (let i = 0; i < 50; i++) {
     const oneCoach = getRandom(coaches);
